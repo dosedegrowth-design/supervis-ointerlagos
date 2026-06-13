@@ -75,25 +75,36 @@ export function ExitPopup() {
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={() => setOpen(false)}
       />
-      <div className="animate-pop-in relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <div className="animate-pop-in relative w-full max-w-sm overflow-hidden rounded-2xl bg-white text-center shadow-2xl">
+        {/* botão fechar */}
+        <button
+          onClick={() => setOpen(false)}
+          aria-label="Fechar"
+          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white transition hover:bg-white/40"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+
         {/* topo azul */}
-        <div className="relative bg-brand px-6 pb-5 pt-7 text-center text-white">
-          <div className="absolute right-0 top-0 h-full w-2 bg-red-brand" />
-          <p className="font-heading text-sm font-bold uppercase tracking-wider text-gold">
-            Espera! Só um instante
+        <div className="bg-brand px-6 pb-5 pt-6 text-white">
+          <p className="font-heading text-xs font-bold uppercase tracking-wider text-gold">
+            Espera! 👀
           </p>
-          <p className="mt-2 font-heading text-2xl font-extrabold leading-tight">
-            Garanta{" "}
-            <span className="box-decoration-clone bg-red-brand px-2 [-webkit-box-decoration-break:clone] [box-decoration-break:clone]">
-              10% de desconto
+          <p className="mt-1.5 font-heading text-2xl font-extrabold leading-tight">
+            Ganhe{" "}
+            <span className="box-decoration-clone bg-red-brand px-1.5 [-webkit-box-decoration-break:clone] [box-decoration-break:clone]">
+              10% OFF
             </span>
           </p>
         </div>
 
-        <div className="px-6 py-6 text-center">
-          <p id="exit-title" className="text-brand/80">
-            Antes de sair, fale agora com a unidade <strong>{unidade.nome}</strong>{" "}
-            no WhatsApp e use seu cupom de <strong>10% OFF</strong> na sua vistoria.
+        {/* corpo */}
+        <div className="px-6 py-5">
+          <p id="exit-title" className="text-sm text-brand/75">
+            Fale agora no WhatsApp e garanta <strong>10% de desconto</strong> na
+            sua vistoria na unidade {unidade.nome}.
           </p>
 
           <a
@@ -101,17 +112,17 @@ export function ExitPopup() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-zap px-6 py-4 text-lg font-bold text-white shadow-lg shadow-zap/30 transition hover:bg-zap-dark"
+            className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-zap px-5 py-3 font-bold text-white shadow-lg shadow-zap/30 transition hover:bg-zap-dark"
           >
-            <WhatsappIcon className="h-6 w-6" />
-            Quero meus 10% de desconto
+            <WhatsappIcon className="h-5 w-5" />
+            Quero meu desconto
           </a>
 
           <button
             onClick={() => setOpen(false)}
-            className="mt-3 text-sm font-semibold text-brand/50 underline-offset-2 hover:text-brand hover:underline"
+            className="mt-2.5 text-xs font-semibold text-brand/45 hover:text-brand/70"
           >
-            Não, prefiro pagar o valor cheio
+            Agora não, obrigado
           </button>
         </div>
       </div>

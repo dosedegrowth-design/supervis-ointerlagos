@@ -164,11 +164,16 @@ export default function Home() {
                 />
               </div>
               {/* badge flutuante */}
-              <div className="absolute -bottom-4 left-4 animate-bounce-soft rounded-xl bg-white px-4 py-3 shadow-xl md:-left-4">
-                <p className="font-heading text-2xl font-extrabold leading-none text-red-brand">
-                  ~10min
-                </p>
-                <p className="text-xs font-semibold text-brand/70">de atendimento</p>
+              <div className="absolute -bottom-4 left-4 flex animate-bounce-soft items-center gap-2.5 rounded-xl bg-white px-4 py-3 shadow-xl md:-left-4">
+                <WhatsappIcon className="h-7 w-7 shrink-0 text-zap" />
+                <div className="text-left leading-tight">
+                  <p className="font-heading text-lg font-extrabold text-brand">
+                    Agende em 5 min
+                  </p>
+                  <p className="text-xs font-semibold text-brand/60">
+                    direto no WhatsApp
+                  </p>
+                </div>
               </div>
             </div>
           </div>
