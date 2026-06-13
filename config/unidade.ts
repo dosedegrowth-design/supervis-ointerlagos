@@ -19,13 +19,16 @@ export const unidade = {
   whatsapp: "5511975102145",
   whatsappDisplay: "(11) 97510-2145",
   telefone: "(11) 99953-8083",
+  telefoneLink: "+551199538083", // para o tel:
   mensagemPadrao:
     "Olá! Vim pelo anúncio e quero saber sobre vistoria veicular na unidade Interlagos.",
 
   endereco: "Av. Interlagos, 2474",
-  bairro: "Interlagos — Zona Sul",
+  bairro: "Interlagos",
   cidade: "São Paulo / SP",
-  mapsQuery: "Super+Visão+Interlagos+Av.+Interlagos+2474+São+Paulo",
+  // endereço usado no "traçar rota"
+  enderecoMaps: "Av. Interlagos, 2474 - Interlagos, São Paulo - SP",
+  coords: { lat: -23.6785380, lng: -46.6848874 },
 
   horario: [
     { dia: "Segunda a Sexta", hora: "09:00 às 18:00" },
@@ -35,7 +38,7 @@ export const unidade = {
 
 export const rede = {
   ano: 2005,
-  laudosMes: "+80 mil",
+  laudosMes: "+90 mil",
   estados: "diversos estados",
 } as const;
 
@@ -114,16 +117,41 @@ export const depoimentos = [
   {
     nome: "Priscila Lamarca",
     texto:
-      "Experiência excelente. Rápidos, prestativos, atenciosos. Indico mil vezes, além do preço justo.",
+      "Experiência excelente, só tenho a agradecer toda atenção, agilidade, sem palavras, rápidos, prestativos, atenciosos. O laudo fica pronto muito rápido, indico mil vezes, além do preço justo. Podem ir sem dúvida, vão amar!",
   },
   {
     nome: "Marcos",
-    texto: "Fui atendido na hora, por volta de 10 min. Muito profissionalismo.",
+    texto:
+      "Cheguei por volta de 17:20, sendo que fecha às 18h. Fui atendido na hora, tudo feito em por volta de 10 min (vistoria de transferência). Muito profissionalismo. Recomendo.",
   },
   {
     nome: "Jose Renato A. Martins",
     texto:
-      "Excelentes profissionais! Graças ao processo criterioso evitaram que eu comprasse um carro com uma batida camuflada.",
+      "Excelentes profissionais! Graças ao processo criterioso e alta qualidade, evitaram que eu comprasse um carro sem segurança nenhuma com uma batida camuflada. Me salvaram de um grande prejuízo. Obrigado.",
+  },
+];
+
+// Bloco "Veja os detalhes da unidade" — copy institucional (igual ao site)
+export const sobreUnidade = [
+  {
+    titulo: "Compra segura do seu veículo",
+    texto:
+      "A Super Visão Interlagos oferece todos os tipos de vistoria veicular para você e sua empresa. Somos uma rede de franquias e, desde 2005, trabalhamos com soluções exclusivas para garantir a sua segurança na hora de comprar ou vender um veículo.",
+  },
+  {
+    titulo: "Vistoria Cautelar",
+    texto:
+      "A Vistoria Cautelar da Super Visão é única. Com ela, você tem uma análise completa da originalidade do veículo e sua estrutura, além da análise documental e do histórico. Indicada para quem busca segurança na compra.",
+  },
+  {
+    titulo: "Vistoria de Transferência",
+    texto:
+      "A Vistoria de Transferência (ECV) atende à legislação vigente. É obrigatória em qualquer compra e venda e garante a procedência do seu veículo, bem como a conformidade com as leis vigentes.",
+  },
+  {
+    titulo: "Vistoria Certicar®",
+    texto:
+      "Serviço exclusivo desenvolvido pela Super Visão. Com a Vistoria Certicar®, você tem respondidas todas as dúvidas na hora de fazer uma compra segura ou agregar valor à sua venda. Nossos especialistas vão te ajudar.",
   },
 ];
 
