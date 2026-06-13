@@ -43,7 +43,12 @@ export const rede = {
 } as const;
 
 export function linkWhatsapp(msg: string = unidade.mensagemPadrao): string {
-  return `https://wa.me/${unidade.whatsapp}?text=${encodeURIComponent(msg)}`;
+  // A palavra "Google" é OBRIGATÓRIA na mensagem: a automação do CRM usa ela
+  // como gatilho pra marcar a origem do lead (tag "google"). Toda mensagem que
+  // não mencionar Google recebe o sufixo automaticamente — assim NENHUM botão
+  // de WhatsApp fica sem o rastreio de origem.
+  const comOrigem = /google/i.test(msg) ? msg : `${msg} (Vim pelo Google)`;
+  return `https://wa.me/${unidade.whatsapp}?text=${encodeURIComponent(comOrigem)}`;
 }
 
 export const servicos: Servico[] = [
