@@ -14,34 +14,51 @@ export function ExitPopup() {
     if (sessionStorage.getItem("spv_exit_shown")) return;
 
     let lastY = window.scrollY;
+    let maxY = window.scrollY;
+    let cleanedUp = false;
+    let armed = false;
+    // só permite disparar depois de alguns segundos (nunca abre cedo demais)
+    const armTimer = window.setTimeout(() => {
+      armed = true;
+    }, 4000);
+
     const fire = () => {
-      if (sessionStorage.getItem("spv_exit_shown")) return;
+      if (cleanedUp || !armed || sessionStorage.getItem("spv_exit_shown")) return;
       sessionStorage.setItem("spv_exit_shown", "1");
       setOpen(true);
       cleanup();
     };
 
-    // Desktop: mouse sai pelo topo da janela
+    // Desktop: mouse sai pelo topo da janela (intenção de fechar a aba)
     const onMouseOut = (e: MouseEvent) => {
       if (e.clientY <= 0 && !e.relatedTarget) fire();
     };
-    // Mobile: scroll pra cima com intenção de sair (após rolar um pouco)
+    // Mobile/geral: rolou pra baixo e voltou a subir = intenção de sair
     const onScroll = () => {
       const y = window.scrollY;
-      if (lastY - y > 12 && y < 360 && y > 40) fire();
+      maxY = Math.max(maxY, y);
+      if (maxY > 450 && lastY - y > 8) fire();
       lastY = y;
     };
+    // Volta pra aba depois de sair (troca de app/aba no celular)
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") fire();
+    };
     // Fallback: tempo de permanência
-    const timer = window.setTimeout(fire, 28000);
+    const timer = window.setTimeout(fire, 18000);
 
-    const cleanup = () => {
+    function cleanup() {
+      cleanedUp = true;
       document.removeEventListener("mouseout", onMouseOut);
       window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("visibilitychange", onVisibility);
       window.clearTimeout(timer);
-    };
+      window.clearTimeout(armTimer);
+    }
 
     document.addEventListener("mouseout", onMouseOut);
     window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
     return cleanup;
   }, []);
 
