@@ -11,7 +11,7 @@ export function MobileStickyBar() {
         )}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-zap py-3.5 text-base font-bold text-white shadow-lg shadow-zap/30 active:scale-[0.98]"
+        className="animate-pulseZap flex flex-1 items-center justify-center gap-2 rounded-xl bg-zap py-3.5 text-base font-bold text-white active:scale-[0.98]"
       >
         <WhatsappIcon className="h-6 w-6" />
         Falar no WhatsApp

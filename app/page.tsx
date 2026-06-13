@@ -121,7 +121,7 @@ export default function Home() {
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-xl bg-zap px-7 py-4 text-lg font-bold text-white shadow-xl shadow-black/30 transition hover:scale-[1.02] hover:bg-zap-dark"
+                  className="animate-pulseZap flex items-center justify-center gap-2 rounded-xl bg-zap px-7 py-4 text-lg font-bold text-white transition hover:scale-[1.03] hover:bg-zap-dark"
                 >
                   <WhatsappIcon className="h-6 w-6" />
                   Agendar agora
@@ -164,7 +164,7 @@ export default function Home() {
                 />
               </div>
               {/* badge flutuante */}
-              <div className="absolute -bottom-4 -left-4 hidden animate-bounce-soft rounded-xl bg-white px-4 py-3 shadow-xl sm:block">
+              <div className="absolute -bottom-4 left-4 animate-bounce-soft rounded-xl bg-white px-4 py-3 shadow-xl md:-left-4">
                 <p className="font-heading text-2xl font-extrabold leading-none text-red-brand">
                   ~10min
                 </p>
@@ -225,19 +225,19 @@ export default function Home() {
                     className="mx-auto h-44 w-44 object-contain p-3 transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
-                <div className="flex flex-1 flex-col p-5">
+                <div className="flex flex-1 flex-col p-5 text-center md:text-left">
                   <h3 className="font-heading text-base font-bold text-brand">
                     {s.nome}
                   </h3>
                   <p className="mt-2 flex-1 text-sm text-brand/65">{s.descricao}</p>
-                  <div className="mt-4 flex items-end justify-between">
+                  <div className="mt-4 flex flex-col items-center gap-3 md:flex-row md:items-end md:justify-between">
                     <div>
                       {s.precoDe && (
                         <span className="block text-xs text-brand/40 line-through">
                           {s.precoDe}
                         </span>
                       )}
-                      <span className="font-heading text-xl font-extrabold text-brand">
+                      <span className="font-heading text-2xl font-extrabold text-brand md:text-xl">
                         {s.preco}
                       </span>
                     </div>
@@ -247,7 +247,7 @@ export default function Home() {
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 rounded-lg bg-zap px-3.5 py-2 text-sm font-bold text-white transition hover:bg-zap-dark"
+                      className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-zap px-3.5 py-2.5 text-sm font-bold text-white transition hover:bg-zap-dark active:scale-95 md:w-auto md:py-2"
                     >
                       <WhatsappIcon className="h-4 w-4" /> Agendar
                     </a>
@@ -270,8 +270,8 @@ export default function Home() {
           />
           <div className="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2">
             {sobreUnidade.map((b, i) => (
-              <Reveal key={b.titulo} delay={(i % 2) * 100}>
-                <h3 className="flex items-center gap-2 font-heading text-lg font-bold text-brand">
+              <Reveal key={b.titulo} delay={(i % 2) * 100} className="text-center md:text-left">
+                <h3 className="flex items-center justify-center gap-2 font-heading text-lg font-bold text-brand md:justify-start">
                   <span className="h-5 w-1 rounded bg-red-brand" />
                   {b.titulo}
                 </h3>
@@ -305,8 +305,8 @@ export default function Home() {
               },
             ].map((p, i) => (
               <Reveal key={p.n} delay={i * 130} className="h-full">
-                <div className="relative h-full rounded-xl border border-black/5 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand font-heading text-xl font-extrabold text-white shadow-lg shadow-brand/20">
+                <div className="relative h-full rounded-xl border border-black/5 bg-white p-6 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg md:text-left">
+                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand font-heading text-xl font-extrabold text-white shadow-lg shadow-brand/20 md:mx-0">
                     {p.n}
                   </div>
                   <h3 className="mt-4 font-heading text-lg font-bold text-brand">
@@ -428,7 +428,7 @@ export default function Home() {
       {/* ===================== LOCALIZAÇÃO ===================== */}
       <section className="bg-[#f5f5f5] py-16">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-2">
-          <div>
+          <Reveal className="text-center md:text-left">
             <p className="font-heading text-sm font-bold uppercase tracking-wider text-red-brand">
               Onde estamos
             </p>
@@ -436,7 +436,7 @@ export default function Home() {
               Estamos te esperando em Interlagos
             </h2>
             <div className="mt-6 space-y-4 text-brand/85">
-              <p className="flex items-start gap-3">
+              <p className="flex items-start justify-center gap-3 md:justify-start">
                 <PinIcon className="mt-0.5 h-5 w-5 shrink-0 text-red-brand" />
                 <span>
                   {unidade.endereco}
@@ -444,7 +444,7 @@ export default function Home() {
                   {unidade.bairro} · {unidade.cidade}
                 </span>
               </p>
-              <div className="flex items-start gap-3">
+              <div className="flex items-start justify-center gap-3 md:justify-start">
                 <ClockIcon className="mt-0.5 h-5 w-5 shrink-0 text-red-brand" />
                 <ul>
                   {unidade.horario.map((h) => (
@@ -454,7 +454,7 @@ export default function Home() {
                   ))}
                 </ul>
               </div>
-              <p className="flex items-center gap-3">
+              <p className="flex items-center justify-center gap-3 md:justify-start">
                 <PhoneIcon className="h-5 w-5 shrink-0 text-red-brand" />
                 {unidade.telefone}
               </p>
@@ -480,7 +480,7 @@ export default function Home() {
                 <PinIcon className="h-5 w-5" /> Traçar rota
               </a>
             </div>
-          </div>
+          </Reveal>
 
           <div className="overflow-hidden rounded-xl border border-black/10 shadow-sm">
             <iframe
