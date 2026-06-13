@@ -18,6 +18,8 @@ import {
   ShieldIcon,
 } from "@/components/icons";
 import { MobileStickyBar, DesktopFloatCta } from "@/components/sticky-cta";
+import { Reveal } from "@/components/reveal";
+import { ExitPopup } from "@/components/exit-popup";
 
 const { lat, lng } = unidade.coords;
 // OpenStreetMap embed com pin — renderiza sempre, sem API key
@@ -96,7 +98,7 @@ export default function Home() {
           />
 
           <div className="mt-8 grid items-center gap-10 md:mt-10 md:grid-cols-[1.05fr_0.95fr]">
-            <div>
+            <div className="animate-fade-up text-center md:text-left">
               <span className="inline-flex items-center gap-2 rounded-full bg-red-brand px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-lg shadow-red-brand/30">
                 <PinIcon className="h-4 w-4" /> Unidade Interlagos · São Paulo
               </span>
@@ -106,18 +108,20 @@ export default function Home() {
                   problema escondido
                 </span>
               </h1>
-              <p className="mt-5 max-w-lg text-lg text-white/85">
+              <p className="mx-auto mt-5 max-w-lg text-lg text-white/85 md:mx-0">
                 Vistoria veicular completa em Interlagos. A gente revela{" "}
                 <strong className="text-white">batidas camufladas, adulterações e pendências</strong>{" "}
                 antes de você fechar negócio.
               </p>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center md:justify-start">
                 <a
-                  href={linkWhatsapp()}
+                  href={linkWhatsapp(
+                    "Olá! Vim pelo anúncio e quero agendar uma vistoria na unidade Interlagos."
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-xl bg-zap px-7 py-4 text-lg font-bold text-white shadow-xl shadow-black/30 transition hover:bg-zap-dark"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-zap px-7 py-4 text-lg font-bold text-white shadow-xl shadow-black/30 transition hover:scale-[1.02] hover:bg-zap-dark"
                 >
                   <WhatsappIcon className="h-6 w-6" />
                   Agendar agora
@@ -130,7 +134,7 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm md:justify-start">
                 <span className="flex items-center gap-1.5 font-semibold">
                   <span className="flex text-gold">
                     {Array.from({ length: 5 }).map((_, i) => (
@@ -148,7 +152,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative animate-fade-up [animation-delay:150ms]">
               <div className="overflow-hidden rounded-2xl border-4 border-white shadow-2xl">
                 <Image
                   src="/img/unidade-full.jpg"
@@ -160,7 +164,7 @@ export default function Home() {
                 />
               </div>
               {/* badge flutuante */}
-              <div className="absolute -bottom-4 -left-4 hidden rounded-xl bg-white px-4 py-3 shadow-xl sm:block">
+              <div className="absolute -bottom-4 -left-4 hidden animate-bounce-soft rounded-xl bg-white px-4 py-3 shadow-xl sm:block">
                 <p className="font-heading text-2xl font-extrabold leading-none text-red-brand">
                   ~10min
                 </p>
@@ -191,21 +195,23 @@ export default function Home() {
       {/* ===================== SERVIÇOS ===================== */}
       <section id="servicos" className="bg-[#f5f5f5] py-16">
         <div className="mx-auto max-w-6xl px-4">
-          <SectionHead
-            eyebrow="Serviços Super Visão"
-            title="Vistorias para você"
-            sub="Escolha o serviço ideal e fale com a gente no WhatsApp para agendar. Os combos saem mais em conta."
-          />
+          <Reveal>
+            <SectionHead
+              eyebrow="Serviços Super Visão"
+              title="Vistorias para você"
+              sub="Escolha o serviço ideal e fale com a gente no WhatsApp para agendar. Os combos saem mais em conta."
+            />
+          </Reveal>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {servicos.map((s) => (
+            {servicos.map((s, i) => (
+              <Reveal key={s.nome} delay={(i % 3) * 90} className="h-full">
               <div
-                key={s.nome}
-                className="relative flex flex-col overflow-hidden rounded-xl border border-black/5 bg-white shadow-sm transition hover:shadow-lg"
+                className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-black/5 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 {/* detalhe diagonal vermelho (marca Super Visão) */}
                 <div className="absolute left-0 top-0 z-10 h-0 w-0 border-l-[36px] border-t-[36px] border-l-transparent border-t-red-brand" />
-                <div className="relative border-b border-black/5 bg-white">
+                <div className="relative overflow-hidden border-b border-black/5 bg-white">
                   {s.destaque && (
                     <span className="absolute right-3 top-3 z-10 rounded-md bg-brand px-2.5 py-1 text-xs font-bold text-white">
                       Mais procurado
@@ -216,7 +222,7 @@ export default function Home() {
                     alt={s.nome}
                     width={300}
                     height={300}
-                    className="mx-auto h-44 w-44 object-contain p-3"
+                    className="mx-auto h-44 w-44 object-contain p-3 transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-5">
@@ -248,6 +254,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -262,14 +269,14 @@ export default function Home() {
             sub="Aqui na Super Visão Interlagos você encontra soluções completas em vistoria veicular. Entre em contato e conheça nossas soluções."
           />
           <div className="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2">
-            {sobreUnidade.map((b) => (
-              <div key={b.titulo}>
+            {sobreUnidade.map((b, i) => (
+              <Reveal key={b.titulo} delay={(i % 2) * 100}>
                 <h3 className="flex items-center gap-2 font-heading text-lg font-bold text-brand">
                   <span className="h-5 w-1 rounded bg-red-brand" />
                   {b.titulo}
                 </h3>
                 <p className="mt-2 text-brand/70">{b.texto}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -296,27 +303,28 @@ export default function Home() {
                 t: "Receba o laudo",
                 d: "Fazemos a análise criteriosa e entregamos um laudo confiável pra você decidir com segurança.",
               },
-            ].map((p) => (
-              <div
-                key={p.n}
-                className="relative rounded-xl border border-black/5 bg-white p-6"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand font-heading text-xl font-extrabold text-white">
-                  {p.n}
+            ].map((p, i) => (
+              <Reveal key={p.n} delay={i * 130} className="h-full">
+                <div className="relative h-full rounded-xl border border-black/5 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand font-heading text-xl font-extrabold text-white shadow-lg shadow-brand/20">
+                    {p.n}
+                  </div>
+                  <h3 className="mt-4 font-heading text-lg font-bold text-brand">
+                    {p.t}
+                  </h3>
+                  <p className="mt-2 text-sm text-brand/65">{p.d}</p>
                 </div>
-                <h3 className="mt-4 font-heading text-lg font-bold text-brand">
-                  {p.t}
-                </h3>
-                <p className="mt-2 text-sm text-brand/65">{p.d}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
           <div className="mt-10 text-center">
             <a
-              href={linkWhatsapp()}
+              href={linkWhatsapp(
+                "Olá! Acabei de ver a página da unidade Interlagos e quero agendar minha vistoria."
+              )}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-zap px-7 py-4 text-base font-bold text-white shadow-lg shadow-zap/30 transition hover:bg-zap-dark"
+              className="inline-flex items-center gap-2 rounded-lg bg-zap px-7 py-4 text-base font-bold text-white shadow-lg shadow-zap/30 transition hover:scale-[1.02] hover:bg-zap-dark"
             >
               <WhatsappIcon className="h-6 w-6" /> Quero agendar minha vistoria
             </a>
@@ -348,19 +356,18 @@ export default function Home() {
                 t: "Confiança da rede",
                 d: `Desde ${rede.ano}, com ${rede.laudosMes} laudos por mês em todo o Brasil.`,
               },
-            ].map((c) => (
-              <div
-                key={c.t}
-                className="rounded-xl border border-black/5 bg-[#f9f9f9] p-6 text-center"
-              >
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand/10 text-brand">
-                  {c.icon}
+            ].map((c, i) => (
+              <Reveal key={c.t} delay={i * 130} className="h-full">
+                <div className="group h-full rounded-xl border border-black/5 bg-[#f9f9f9] p-6 text-center transition duration-300 hover:-translate-y-1 hover:border-red-brand/20 hover:shadow-lg">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand/10 text-brand transition group-hover:bg-red-brand group-hover:text-white">
+                    {c.icon}
+                  </div>
+                  <h3 className="mt-4 font-heading text-lg font-bold text-brand">
+                    {c.t}
+                  </h3>
+                  <p className="mt-2 text-sm text-brand/65">{c.d}</p>
                 </div>
-                <h3 className="mt-4 font-heading text-lg font-bold text-brand">
-                  {c.t}
-                </h3>
-                <p className="mt-2 text-sm text-brand/65">{c.d}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -375,23 +382,22 @@ export default function Home() {
             light
           />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {depoimentos.map((d) => (
-              <figure
-                key={d.nome}
-                className="flex flex-col rounded-xl bg-white p-6 shadow-lg"
-              >
-                <figcaption className="font-heading font-bold text-brand">
-                  {d.nome}
-                </figcaption>
-                <div className="mt-1 flex gap-0.5 text-gold">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <StarIcon key={i} className="h-5 w-5" />
-                  ))}
-                </div>
-                <blockquote className="mt-3 flex-1 text-sm text-brand/75">
-                  “{d.texto}”
-                </blockquote>
-              </figure>
+            {depoimentos.map((d, idx) => (
+              <Reveal key={d.nome} delay={idx * 130} className="h-full">
+                <figure className="flex h-full flex-col rounded-xl bg-white p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                  <figcaption className="font-heading font-bold text-brand">
+                    {d.nome}
+                  </figcaption>
+                  <div className="mt-1 flex gap-0.5 text-gold">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <StarIcon key={i} className="h-5 w-5" />
+                    ))}
+                  </div>
+                  <blockquote className="mt-3 flex-1 text-sm text-brand/75">
+                    “{d.texto}”
+                  </blockquote>
+                </figure>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -402,19 +408,18 @@ export default function Home() {
         <div className="mx-auto max-w-3xl px-4">
           <SectionHead eyebrow="Dúvidas" title="Perguntas frequentes" />
           <div className="mt-8 space-y-3">
-            {faq.map((f) => (
-              <details
-                key={f.q}
-                className="group rounded-lg border border-black/10 bg-[#f9f9f9] p-5 open:bg-white open:shadow-md"
-              >
-                <summary className="flex cursor-pointer list-none items-center justify-between font-heading font-bold text-brand">
-                  {f.q}
-                  <span className="ml-4 text-red-brand transition group-open:rotate-45">
-                    +
-                  </span>
-                </summary>
-                <p className="mt-3 text-brand/70">{f.a}</p>
-              </details>
+            {faq.map((f, i) => (
+              <Reveal key={f.q} delay={i * 70}>
+                <details className="group rounded-lg border border-black/10 bg-[#f9f9f9] p-5 transition open:bg-white open:shadow-md hover:border-red-brand/30">
+                  <summary className="flex cursor-pointer list-none items-center justify-between font-heading font-bold text-brand">
+                    {f.q}
+                    <span className="ml-4 text-2xl leading-none text-red-brand transition-transform duration-300 group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-brand/70">{f.a}</p>
+                </details>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -457,10 +462,12 @@ export default function Home() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                href={linkWhatsapp()}
+                href={linkWhatsapp(
+                  "Olá! Quero confirmar o endereço e o horário da unidade Interlagos para agendar minha vistoria."
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded-lg bg-zap px-6 py-3.5 font-bold text-white transition hover:bg-zap-dark"
+                className="flex items-center justify-center gap-2 rounded-lg bg-zap px-6 py-3.5 font-bold text-white transition hover:scale-[1.02] hover:bg-zap-dark"
               >
                 <WhatsappIcon className="h-6 w-6" /> Falar no WhatsApp
               </a>
@@ -506,6 +513,7 @@ export default function Home() {
 
       <MobileStickyBar />
       <DesktopFloatCta />
+      <ExitPopup />
     </main>
   );
 }
