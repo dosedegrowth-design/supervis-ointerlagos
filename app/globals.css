@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* padding extra no rodapé p/ não cobrir conteúdo com a barra fixa do mobile */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 76px;
+  }
+}
