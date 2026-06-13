@@ -1,13 +1,14 @@
-import { linkWhatsapp, unidade } from "@/config/unidade";
+import { type Unidade, linkWhatsapp } from "@/config/unidades";
 import { WhatsappIcon, PhoneIcon } from "./icons";
 
 /** Barra fixa no rodapé (mobile): WhatsApp principal + botão azul de ligar. */
-export function MobileStickyBar() {
+export function MobileStickyBar({ unidade }: { unidade: Unidade }) {
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 flex items-center gap-2.5 border-t border-black/5 bg-white/95 px-3 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] backdrop-blur md:hidden">
       <a
         href={linkWhatsapp(
-          "Olá! Vim pelo anúncio e quero atendimento na unidade Interlagos."
+          unidade,
+          `Olá! Vim pelo anúncio e quero atendimento na unidade ${unidade.nome}.`
         )}
         target="_blank"
         rel="noopener noreferrer"
@@ -28,7 +29,7 @@ export function MobileStickyBar() {
 }
 
 /** Botões flutuantes (desktop): WhatsApp + ligar. */
-export function DesktopFloatCta() {
+export function DesktopFloatCta({ unidade }: { unidade: Unidade }) {
   return (
     <div className="fixed bottom-6 right-6 z-50 hidden flex-col items-end gap-3 md:flex">
       <a
@@ -40,7 +41,8 @@ export function DesktopFloatCta() {
       </a>
       <a
         href={linkWhatsapp(
-          "Olá! Vim pelo anúncio e quero falar com a unidade Interlagos."
+          unidade,
+          `Olá! Vim pelo anúncio e quero falar com a unidade ${unidade.nome}.`
         )}
         target="_blank"
         rel="noopener noreferrer"

@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { linkWhatsapp, unidade } from "@/config/unidade";
+import { type Unidade, linkWhatsapp } from "@/config/unidades";
 import { WhatsappIcon } from "./icons";
 
-const MSG =
-  "Olá! Vim pelo anúncio e quero garantir os 10% de desconto na vistoria da unidade Interlagos. 🚗";
-
-export function ExitPopup() {
+export function ExitPopup({ unidade }: { unidade: Unidade }) {
   const [open, setOpen] = useState(false);
+
+  const MSG = `Olá! Vim pelo anúncio e quero garantir os 10% de desconto na vistoria da unidade ${unidade.nome}. 🚗`;
 
   useEffect(() => {
     if (sessionStorage.getItem("spv_exit_shown")) return;
@@ -17,7 +16,6 @@ export function ExitPopup() {
     let maxY = window.scrollY;
     let cleanedUp = false;
     let armed = false;
-    // só permite disparar depois de alguns segundos (nunca abre cedo demais)
     const armTimer = window.setTimeout(() => {
       armed = true;
     }, 4000);
@@ -29,22 +27,18 @@ export function ExitPopup() {
       cleanup();
     };
 
-    // Desktop: mouse sai pelo topo da janela (intenção de fechar a aba)
     const onMouseOut = (e: MouseEvent) => {
       if (e.clientY <= 0 && !e.relatedTarget) fire();
     };
-    // Mobile/geral: rolou pra baixo e voltou a subir = intenção de sair
     const onScroll = () => {
       const y = window.scrollY;
       maxY = Math.max(maxY, y);
       if (maxY > 450 && lastY - y > 8) fire();
       lastY = y;
     };
-    // Volta pra aba depois de sair (troca de app/aba no celular)
     const onVisibility = () => {
       if (document.visibilityState === "visible") fire();
     };
-    // Fallback: tempo de permanência
     const timer = window.setTimeout(fire, 18000);
 
     function cleanup() {
@@ -76,7 +70,6 @@ export function ExitPopup() {
         onClick={() => setOpen(false)}
       />
       <div className="animate-pop-in relative w-full max-w-sm overflow-hidden rounded-2xl bg-white text-center shadow-2xl">
-        {/* botão fechar */}
         <button
           onClick={() => setOpen(false)}
           aria-label="Fechar"
@@ -87,7 +80,6 @@ export function ExitPopup() {
           </svg>
         </button>
 
-        {/* topo azul */}
         <div className="bg-brand px-6 pb-5 pt-6 text-white">
           <p className="font-heading text-xs font-bold uppercase tracking-wider text-gold">
             Espera! 👀
@@ -100,7 +92,6 @@ export function ExitPopup() {
           </p>
         </div>
 
-        {/* corpo */}
         <div className="px-6 py-5">
           <p id="exit-title" className="text-sm text-brand/75">
             Fale agora no WhatsApp e garanta <strong>10% de desconto</strong> na
@@ -108,7 +99,7 @@ export function ExitPopup() {
           </p>
 
           <a
-            href={linkWhatsapp(MSG)}
+            href={linkWhatsapp(unidade, MSG)}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setOpen(false)}

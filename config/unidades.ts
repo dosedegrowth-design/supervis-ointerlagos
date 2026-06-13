@@ -1,40 +1,36 @@
 // ============================================================
-// CONFIG CENTRAL DA UNIDADE — é só editar este arquivo pra
-// replicar a LP pra qualquer outra unidade da rede Super Visão.
+// CONFIG MULTI-UNIDADE — cada unidade vira uma rota /{slug}.
+// Pra adicionar uma nova unidade: copie um bloco em UNIDADES,
+// troque os dados e as imagens. O resto (serviços, depoimentos,
+// FAQ) é compartilhado da rede.
 // ============================================================
 
 export type Servico = {
   nome: string;
   descricao: string;
   preco: string;
-  precoDe?: string; // preço "de" (quando há desconto)
+  precoDe?: string;
   imagem: string;
-  destaque?: boolean; // card em destaque (combos)
+  destaque?: boolean;
 };
 
-export const unidade = {
-  nome: "Interlagos",
-  nomeCompleto: "Super Visão Interlagos",
-  // Mesmo link da página institucional (cai na Soffia / fluxo Zona Sul)
-  whatsapp: "5511975102145",
-  whatsappDisplay: "(11) 97510-2145",
-  telefone: "(11) 99953-8083",
-  telefoneLink: "+551199538083", // para o tel:
-  mensagemPadrao:
-    "Olá! Vim pelo anúncio e quero saber sobre vistoria veicular na unidade Interlagos.",
-
-  endereco: "Av. Interlagos, 2474",
-  bairro: "Interlagos",
-  cidade: "São Paulo / SP",
-  // endereço usado no "traçar rota"
-  enderecoMaps: "Av. Interlagos, 2474 - Interlagos, São Paulo - SP",
-  coords: { lat: -23.6785380, lng: -46.6848874 },
-
-  horario: [
-    { dia: "Segunda a Sexta", hora: "09:00 às 18:00" },
-    { dia: "Sábado", hora: "09:00 às 16:00" },
-  ],
-} as const;
+export type Unidade = {
+  slug: string;
+  nome: string;
+  nomeCompleto: string;
+  foto: string; // foto da fachada (hero)
+  whatsapp: string; // só dígitos, formato wa.me
+  whatsappDisplay: string;
+  telefone: string;
+  telefoneLink: string; // tel:
+  mensagemPadrao: string;
+  endereco: string;
+  bairro: string;
+  cidade: string;
+  enderecoMaps: string;
+  coords: { lat: number; lng: number };
+  horario: { dia: string; hora: string }[];
+};
 
 export const rede = {
   ano: 2005,
@@ -42,16 +38,15 @@ export const rede = {
   estados: "diversos estados",
 } as const;
 
-export function linkWhatsapp(msg: string = unidade.mensagemPadrao): string {
-  // A palavra "Google" é OBRIGATÓRIA na mensagem: a automação do CRM usa ela
-  // como gatilho pra marcar a origem do lead (tag "google"). Toda mensagem que
-  // não mencionar Google recebe o sufixo automaticamente — assim NENHUM botão
-  // de WhatsApp fica sem o rastreio de origem.
-  const comOrigem = /google/i.test(msg) ? msg : `${msg} (Vim pelo Google)`;
+// ---- A palavra "Google" é obrigatória: gatilho de origem no CRM ----
+export function linkWhatsapp(unidade: Unidade, msg?: string): string {
+  const base = msg ?? unidade.mensagemPadrao;
+  const comOrigem = /google/i.test(base) ? base : `${base} (Vim pelo Google)`;
   return `https://wa.me/${unidade.whatsapp}?text=${encodeURIComponent(comOrigem)}`;
 }
 
-export const servicos: Servico[] = [
+// ---- Serviços e preços (iguais nas unidades SP) ----
+export const SERVICOS: Servico[] = [
   {
     nome: "Combo Cautelar + Transferência",
     descricao: "Vistoria cautelar completa + laudo de transferência (ECV) num pacote só.",
@@ -118,7 +113,7 @@ export const servicos: Servico[] = [
   },
 ];
 
-export const depoimentos = [
+export const DEPOIMENTOS = [
   {
     nome: "Priscila Lamarca",
     texto:
@@ -136,31 +131,7 @@ export const depoimentos = [
   },
 ];
 
-// Bloco "Veja os detalhes da unidade" — copy institucional (igual ao site)
-export const sobreUnidade = [
-  {
-    titulo: "Compra segura do seu veículo",
-    texto:
-      "A Super Visão Interlagos oferece todos os tipos de vistoria veicular para você e sua empresa. Somos uma rede de franquias e, desde 2005, trabalhamos com soluções exclusivas para garantir a sua segurança na hora de comprar ou vender um veículo.",
-  },
-  {
-    titulo: "Vistoria Cautelar",
-    texto:
-      "A Vistoria Cautelar da Super Visão é única. Com ela, você tem uma análise completa da originalidade do veículo e sua estrutura, além da análise documental e do histórico. Indicada para quem busca segurança na compra.",
-  },
-  {
-    titulo: "Vistoria de Transferência",
-    texto:
-      "A Vistoria de Transferência (ECV) atende à legislação vigente. É obrigatória em qualquer compra e venda e garante a procedência do seu veículo, bem como a conformidade com as leis vigentes.",
-  },
-  {
-    titulo: "Vistoria Certicar®",
-    texto:
-      "Serviço exclusivo desenvolvido pela Super Visão. Com a Vistoria Certicar®, você tem respondidas todas as dúvidas na hora de fazer uma compra segura ou agregar valor à sua venda. Nossos especialistas vão te ajudar.",
-  },
-];
-
-export const faq = [
+export const FAQ = [
   {
     q: "O que a vistoria Certicar verifica?",
     a: "Pintura com medição de espessura, estrutura (longarinas, painéis, laterais, teto), originalidade (numeração de motor, chassi, câmbio, vidros e etiquetas), itens acessórios e cadastro (leilão, sinistro, roubo, restrições). É a análise mais completa para quem vai comprar.",
@@ -178,3 +149,79 @@ export const faq = [
     a: "O atendimento costuma ser rápido — boa parte dos clientes é atendida em poucos minutos. Chame no WhatsApp para agendar o melhor horário.",
   },
 ];
+
+export function sobreUnidade(nomeCompleto: string) {
+  return [
+    {
+      titulo: "Compra segura do seu veículo",
+      texto: `A ${nomeCompleto} oferece todos os tipos de vistoria veicular para você e sua empresa. Somos uma rede de franquias e, desde 2005, trabalhamos com soluções exclusivas para garantir a sua segurança na hora de comprar ou vender um veículo.`,
+    },
+    {
+      titulo: "Vistoria Cautelar",
+      texto:
+        "A Vistoria Cautelar da Super Visão é única. Com ela, você tem uma análise completa da originalidade do veículo e sua estrutura, além da análise documental e do histórico. Indicada para quem busca segurança na compra.",
+    },
+    {
+      titulo: "Vistoria de Transferência",
+      texto:
+        "A Vistoria de Transferência (ECV) atende à legislação vigente. É obrigatória em qualquer compra e venda e garante a procedência do seu veículo, bem como a conformidade com as leis vigentes.",
+    },
+    {
+      titulo: "Vistoria Certicar®",
+      texto:
+        "Serviço exclusivo desenvolvido pela Super Visão. Com a Vistoria Certicar®, você tem respondidas todas as dúvidas na hora de fazer uma compra segura ou agregar valor à sua venda. Nossos especialistas vão te ajudar.",
+    },
+  ];
+}
+
+// ---- Unidades ----
+const UNIDADES: Record<string, Unidade> = {
+  interlagos: {
+    slug: "interlagos",
+    nome: "Interlagos",
+    nomeCompleto: "Super Visão Interlagos",
+    foto: "/img/interlagos.jpg",
+    whatsapp: "5511975102145",
+    whatsappDisplay: "(11) 97510-2145",
+    telefone: "(11) 99953-8083",
+    telefoneLink: "+551199538083",
+    mensagemPadrao:
+      "Olá! Vim pelo anúncio e quero saber sobre vistoria veicular na unidade Interlagos.",
+    endereco: "Av. Interlagos, 2474",
+    bairro: "Interlagos",
+    cidade: "São Paulo / SP",
+    enderecoMaps: "Av. Interlagos, 2474 - Interlagos, São Paulo - SP",
+    coords: { lat: -23.678538, lng: -46.6848874 },
+    horario: [
+      { dia: "Segunda a Sexta", hora: "09:00 às 18:00" },
+      { dia: "Sábado", hora: "09:00 às 16:00" },
+    ],
+  },
+  perdizes: {
+    slug: "perdizes",
+    nome: "Perdizes",
+    nomeCompleto: "Super Visão Perdizes",
+    foto: "/img/perdizes.jpg",
+    whatsapp: "5511975952145",
+    whatsappDisplay: "(11) 97595-2145",
+    telefone: "(11) 97595-2145",
+    telefoneLink: "+5511975952145",
+    mensagemPadrao:
+      "Olá! Vim pelo anúncio e quero saber sobre vistoria veicular na unidade Perdizes.",
+    endereco: "Av. Paulo VI, 1820",
+    bairro: "Perdizes / Sumaré",
+    cidade: "São Paulo / SP",
+    enderecoMaps: "Av. Paulo VI, 1820 - Sumaré, Perdizes, São Paulo - SP",
+    coords: { lat: -23.5495979, lng: -46.6772373 },
+    horario: [
+      { dia: "Segunda a Sexta", hora: "08:00 às 18:00" },
+      { dia: "Sábado", hora: "09:00 às 16:00" },
+    ],
+  },
+};
+
+export const unidadeSlugs = Object.keys(UNIDADES);
+
+export function getUnidade(slug: string): Unidade | null {
+  return UNIDADES[slug] ?? null;
+}

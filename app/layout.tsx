@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { unidade } from "@/config/unidade";
 
 // fontes auto-hospedadas (variable) — não dependem de rede no build
 const lexend = localFont({
@@ -18,16 +17,10 @@ const jost = localFont({
 });
 
 export const metadata: Metadata = {
-  title: `${unidade.nomeCompleto} — Vistoria Veicular | Não compre carro com problema escondido`,
+  title: "Super Visão — Vistoria Veicular | Não compre carro com problema escondido",
   description:
-    "Vistoria cautelar, Certicar, transferência e mais na unidade Interlagos. Atendimento rápido e laudo confiável. Chame no WhatsApp e agende agora.",
+    "Vistoria cautelar, Certicar, transferência e mais. Atendimento rápido e laudo confiável. Chame no WhatsApp e agende agora.",
   robots: { index: true, follow: true },
-  openGraph: {
-    title: `${unidade.nomeCompleto} — Vistoria Veicular`,
-    description:
-      "Garanta segurança na compra do seu veículo. Atendimento rápido na unidade Interlagos, São Paulo.",
-    type: "website",
-  },
 };
 
 export const viewport: Viewport = {
