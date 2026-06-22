@@ -221,6 +221,30 @@ const UNIDADES: Record<string, Unidade> = {
       { dia: "Sábado", hora: "09:00 às 16:00" },
     ],
   },
+  atlantica: {
+    slug: "atlantica",
+    nome: "Interlagos Atlântica",
+    nomeCompleto: "Super Visão Interlagos Atlântica",
+    gtmId: "GTM-NNHGJPT",
+    foto: "/img/atlantica.png",
+    // Compartilha o WhatsApp do fluxo Zona Sul (mesmo da unidade Interlagos);
+    // a mensagem identifica a unidade Atlântica.
+    whatsapp: "5511975102145",
+    whatsappDisplay: "(11) 97510-2145",
+    telefone: "(11) 97510-2145",
+    telefoneLink: "+5511975102145",
+    mensagemPadrao:
+      "Olá! Vim pelo anúncio e quero saber sobre vistoria veicular na unidade Interlagos Atlântica.",
+    endereco: "Av. Atlântica, 2145",
+    bairro: "Interlagos",
+    cidade: "São Paulo / SP",
+    enderecoMaps: "Av. Atlântica, 2145 - Interlagos, São Paulo - SP",
+    coords: { lat: -23.7058712, lng: -46.7137267 },
+    horario: [
+      { dia: "Segunda a Sexta", hora: "09:00 às 18:00" },
+      { dia: "Sábado", hora: "09:00 às 16:00" },
+    ],
+  },
 };
 
 export const unidadeSlugs = Object.keys(UNIDADES);
