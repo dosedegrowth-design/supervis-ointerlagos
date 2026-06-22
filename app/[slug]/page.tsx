@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { getUnidade, unidadeSlugs } from "@/config/unidades";
 import { LandingPage } from "@/components/landing-page";
 
@@ -36,5 +37,22 @@ export default async function Page({
   const { slug } = await params;
   const u = getUnidade(slug);
   if (!u) notFound();
-  return <LandingPage unidade={u} />;
+  return (
+    <>
+      {/* Google Tag Manager — container próprio desta unidade */}
+      <Script id={`gtm-${u.slug}`} strategy="afterInteractive">
+        {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${u.gtmId}');`}
+      </Script>
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${u.gtmId}`}
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+          title="gtm"
+        />
+      </noscript>
+      <LandingPage unidade={u} />
+    </>
+  );
 }

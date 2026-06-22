@@ -18,6 +18,7 @@ export type Unidade = {
   slug: string;
   nome: string;
   nomeCompleto: string;
+  gtmId: string; // Google Tag Manager (container próprio por unidade)
   foto: string; // foto da fachada (hero)
   whatsapp: string; // só dígitos, formato wa.me
   whatsappDisplay: string;
@@ -180,6 +181,7 @@ const UNIDADES: Record<string, Unidade> = {
     slug: "interlagos",
     nome: "Interlagos",
     nomeCompleto: "Super Visão Interlagos",
+    gtmId: "GTM-KWPSPFQ",
     foto: "/img/interlagos.jpg",
     whatsapp: "5511975102145",
     whatsappDisplay: "(11) 97510-2145",
@@ -201,6 +203,7 @@ const UNIDADES: Record<string, Unidade> = {
     slug: "perdizes",
     nome: "Perdizes",
     nomeCompleto: "Super Visão Perdizes",
+    gtmId: "GTM-TBGPJQ77",
     foto: "/img/perdizes.jpg",
     whatsapp: "5511975952145",
     whatsappDisplay: "(11) 97595-2145",
